@@ -1,12 +1,15 @@
 package Mock.Client;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public class PriceCalculator {
 
-    public float calculatePrices(int[] priceArray) {
-        int finalPrice = 0;
+    public static BigDecimal calculatePrice(List<Integer> prices) {
+        BigDecimal finalPrice = new BigDecimal("0");
 
-        for (int price : priceArray) {
-            finalPrice += price;
+        for (int price : prices) {
+            finalPrice = finalPrice.add(new BigDecimal(price));
         }
 
         return finalPrice;
