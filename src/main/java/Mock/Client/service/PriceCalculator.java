@@ -1,11 +1,11 @@
-package Mock.Client;
+package Mock.Client.service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class PriceCalculator {
 
-    public static BigDecimal calculatePrice(List<Integer> prices) {
+    public BigDecimal calculatePrice(List<Integer> prices) {
         BigDecimal finalPrice = new BigDecimal("0");
 
         for (int price : prices) {

@@ -1,6 +1,8 @@
 package Mock.Client;
 
+import Mock.Client.service.PriceCalculator;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,10 +12,15 @@ public class PriceCalculatorTest {
 
     private PriceCalculator priceCalculator;
 
+    @BeforeEach
+    void setUp(){
+        this.priceCalculator = new PriceCalculator();
+    }
+
     @Test
     public void calculatepricesValid() {
         List<Integer> toCalculate = List.of(200, 2340, 3245,370);
-        BigDecimal calculatedPrice = PriceCalculator.calculatePrice(toCalculate);
+        BigDecimal calculatedPrice = priceCalculator.calculatePrice(toCalculate);
 
         BigDecimal expectedPrice = new BigDecimal("6155");
 
@@ -23,7 +30,7 @@ public class PriceCalculatorTest {
     @Test
     public void calculatePriceMAXInteger() {
         List<Integer> toCalculate = List.of(Integer.MAX_VALUE, 100, 2,3);
-        BigDecimal calculatedPrice = PriceCalculator.calculatePrice(toCalculate);
+        BigDecimal calculatedPrice = priceCalculator.calculatePrice(toCalculate);
 
         BigDecimal expectedPrice = new BigDecimal("2147483752");
 
