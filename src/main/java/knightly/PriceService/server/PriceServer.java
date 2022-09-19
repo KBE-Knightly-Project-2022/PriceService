@@ -1,5 +1,6 @@
 package knightly.PriceService.server;
 
+import knightly.PriceService.server.dto.PriceRequest;
 import knightly.PriceService.service.PriceCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,14 @@ public class PriceServer {
     private static final Logger logger = LoggerFactory.getLogger(PriceServer.class);
 
     @RabbitListener(queues = "${price.queue.name}")
-    public BigDecimal calculatePrice(List<Integer> prices) {
+    public BigDecimal calculatePrice(PriceRequest priceRequest) {
+        List<Integer> prices;
+        try {
+            prices = priceRequest.getPrices();
+        } catch (NullPointerException e) {
+            logger.error("Error unpacking pricerequest:" + this.getClass());
+            return new BigDecimal("0.00");
+        }
         try {
             return this.priceCalculator.calculatePrice(prices);
         } catch (Exception e) {
