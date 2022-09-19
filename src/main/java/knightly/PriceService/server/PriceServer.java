@@ -1,13 +1,12 @@
-package Mock.Client.server;
+package knightly.PriceService.server;
 
-import Mock.Client.service.PriceCalculator;
+import knightly.PriceService.service.PriceCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 

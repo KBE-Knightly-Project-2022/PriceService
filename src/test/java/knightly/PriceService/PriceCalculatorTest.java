@@ -1,6 +1,6 @@
-package Mock.Client;
+package knightly.PriceService;
 
-import Mock.Client.service.PriceCalculator;
+import knightly.PriceService.service.PriceCalculator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

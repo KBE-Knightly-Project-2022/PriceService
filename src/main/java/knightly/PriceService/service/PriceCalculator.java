@@ -1,4 +1,4 @@
-package Mock.Client.service;
+package knightly.PriceService.service;
 
 import org.springframework.stereotype.Service;
 

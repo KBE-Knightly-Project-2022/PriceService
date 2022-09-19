@@ -1,6 +1,6 @@
-package Mock.Client.config;
+package knightly.PriceService.config;
 
-import Mock.Client.server.PriceServer;
+import knightly.PriceService.server.PriceServer;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
