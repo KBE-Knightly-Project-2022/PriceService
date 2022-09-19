@@ -1,6 +1,6 @@
 package knightly.PriceService;
 
-import knightly.PriceService.service.PriceCalculator;
+import knightly.PriceService.service.impl.PriceCalculatorImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,19 +8,19 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class PriceCalculatorTest {
+public class PriceCalculatorImplTest {
 
-    private PriceCalculator priceCalculator;
+    private PriceCalculatorImpl priceCalculatorImpl;
 
     @BeforeEach
     void setUp(){
-        this.priceCalculator = new PriceCalculator();
+        this.priceCalculatorImpl = new PriceCalculatorImpl();
     }
 
     @Test
     public void calculatepricesValid() {
         List<Integer> toCalculate = List.of(200, 2340, 3245,370);
-        BigDecimal calculatedPrice = priceCalculator.calculatePrice(toCalculate);
+        BigDecimal calculatedPrice = priceCalculatorImpl.calculatePrice(toCalculate);
 
         BigDecimal expectedPrice = new BigDecimal("6155");
 
@@ -30,7 +30,7 @@ public class PriceCalculatorTest {
     @Test
     public void calculatePriceMAXInteger() {
         List<Integer> toCalculate = List.of(Integer.MAX_VALUE, 100, 2,3);
-        BigDecimal calculatedPrice = priceCalculator.calculatePrice(toCalculate);
+        BigDecimal calculatedPrice = priceCalculatorImpl.calculatePrice(toCalculate);
 
         BigDecimal expectedPrice = new BigDecimal("2147483752");
 
