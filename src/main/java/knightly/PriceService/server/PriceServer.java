@@ -1,5 +1,6 @@
 package knightly.PriceService.server;
 
+import com.google.gson.Gson;
 import knightly.PriceService.server.dto.PriceRequest;
 import knightly.PriceService.service.PriceCalculator;
 import knightly.PriceService.service.impl.PriceCalculatorImpl;
@@ -19,19 +20,27 @@ public class PriceServer {
     private static final Logger logger = LoggerFactory.getLogger(PriceServer.class);
 
     @RabbitListener(queues = "${price.queue.name}")
-    public BigDecimal calculatePrice(PriceRequest priceRequest) {
+    public BigDecimal calculatePrice(String priceRequestString) {
         List<Integer> prices;
         try {
+            PriceRequest priceRequest = convertJsonToPriceRequest(priceRequestString);
             prices = priceRequest.getPrices();
+            logger.info("got list of prices" + prices.toString());
         } catch (NullPointerException e) {
             logger.error("Error unpacking pricerequest:" + this.getClass());
             return new BigDecimal("0.00");
         }
         try {
-            return this.priceCalculatorImpl.calculatePrice(prices);
+            BigDecimal bigDecimal = this.priceCalculatorImpl.calculatePrice(prices);
+            logger.info("returning:" + bigDecimal);
+            return bigDecimal;
         } catch (Exception e) {
             logger.error("Error calculating Price in:" + this.getClass());
             return new BigDecimal("0.00");
         }
+    }
+
+    private PriceRequest convertJsonToPriceRequest(String json) {
+        return new Gson().fromJson(json, PriceRequest.class);
     }
 }
