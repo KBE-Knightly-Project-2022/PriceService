@@ -1,6 +1,7 @@
 package knightly.PriceService.server;
 
 import com.google.gson.Gson;
+import knightly.PriceService.server.dto.PriceReply;
 import knightly.PriceService.server.dto.PriceRequest;
 import knightly.PriceService.service.PriceCalculator;
 import knightly.PriceService.service.impl.PriceCalculatorImpl;
@@ -20,7 +21,7 @@ public class PriceServer {
     private static final Logger logger = LoggerFactory.getLogger(PriceServer.class);
 
     @RabbitListener(queues = "${price.queue.name}")
-    public BigDecimal calculatePrice(String priceRequestString) {
+    public String calculatePrice(String priceRequestString) {
         List<Integer> prices;
         try {
             PriceRequest priceRequest = convertJsonToPriceRequest(priceRequestString);
@@ -28,19 +29,27 @@ public class PriceServer {
             logger.info("got list of prices" + prices.toString());
         } catch (NullPointerException e) {
             logger.error("Error unpacking pricerequest:" + this.getClass());
-            return new BigDecimal("0.00");
+            return createErrorPricereplyJson();
         }
         try {
-            BigDecimal bigDecimal = this.priceCalculatorImpl.calculatePrice(prices);
-            logger.info("returning:" + bigDecimal);
-            return bigDecimal;
+            PriceReply priceReply =  new PriceReply(this.priceCalculatorImpl.calculatePrice(prices));
+            logger.info("returning:" + priceReply.getCalculatedPrice());
+            return convertPriceReplyToJson(priceReply);
         } catch (Exception e) {
             logger.error("Error calculating Price in:" + this.getClass());
-            return new BigDecimal("0.00");
+            return createErrorPricereplyJson();
         }
     }
 
     private PriceRequest convertJsonToPriceRequest(String json) {
         return new Gson().fromJson(json, PriceRequest.class);
+    }
+
+    private String convertPriceReplyToJson(PriceReply priceReply) {
+        return new Gson().toJson(priceReply);
+    }
+
+    private String createErrorPricereplyJson(){
+        return convertPriceReplyToJson(new PriceReply(new BigDecimal("0.00")));
     }
 }
