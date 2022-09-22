@@ -21,7 +21,7 @@ public class PriceServer {
     private static final Logger logger = LoggerFactory.getLogger(PriceServer.class);
 
     @RabbitListener(queues = "${price.queue.name}")
-    public String calculatePrice(String priceRequestString) {
+    public String handlePriceRequest(String priceRequestString) {
         List<Integer> prices;
         try {
             PriceRequest priceRequest = convertJsonToPriceRequest(priceRequestString);
