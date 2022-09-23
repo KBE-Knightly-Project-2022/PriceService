@@ -1,6 +1,7 @@
 package knightly.PriceService.server;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import knightly.PriceService.server.dto.PriceReply;
 import knightly.PriceService.server.dto.PriceRequest;
 import knightly.PriceService.service.PriceCalculator;
@@ -27,8 +28,8 @@ public class PriceServer {
             PriceRequest priceRequest = convertJsonToPriceRequest(priceRequestString);
             prices = priceRequest.getPrices();
             logger.info("got list of prices" + prices.toString());
-        } catch (NullPointerException e) {
-            logger.error("Error unpacking pricerequest:" + this.getClass());
+        } catch (NullPointerException | JsonSyntaxException e) {
+            logger.error("Error unpacking pricerequest in: " + this.getClass());
             return createErrorPricereplyJson();
         }
         try {
