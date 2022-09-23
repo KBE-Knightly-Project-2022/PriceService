@@ -46,7 +46,7 @@ public class PriceServerTest {
     }
 
     @Test
-    public void handleWrongJson() {
+    public void handleWrongDTO() {
         String wrongDTOObject = getWrongDTOJson();
 
         priceServer.handlePriceRequest(wrongDTOObject);
