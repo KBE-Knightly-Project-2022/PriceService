@@ -1,4 +1,4 @@
-package knightly.PriceService;
+package knightly.PriceService.service;
 
 import knightly.PriceService.service.impl.PriceCalculatorImpl;
 import org.junit.jupiter.api.Assertions;
