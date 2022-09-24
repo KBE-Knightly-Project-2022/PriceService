@@ -32,14 +32,10 @@ public class PriceServer {
             logger.error("Error unpacking pricerequest in: " + this.getClass());
             return createErrorPricereplyJson();
         }
-        try {
-            PriceReply priceReply =  new PriceReply(this.priceCalculatorImpl.calculatePrice(prices));
-            logger.info("returning:" + priceReply.getCalculatedPrice());
-            return convertPriceReplyToJson(priceReply);
-        } catch (Exception e) {
-            logger.error("Error calculating Price in:" + this.getClass());
-            return createErrorPricereplyJson();
-        }
+
+        PriceReply priceReply = new PriceReply(this.priceCalculatorImpl.calculatePrice(prices));
+        logger.info("returning:" + priceReply.getCalculatedPrice());
+        return convertPriceReplyToJson(priceReply);
     }
 
     private PriceRequest convertJsonToPriceRequest(String json) {
@@ -50,7 +46,7 @@ public class PriceServer {
         return new Gson().toJson(priceReply);
     }
 
-    private String createErrorPricereplyJson(){
+    private String createErrorPricereplyJson() {
         return convertPriceReplyToJson(new PriceReply(new BigDecimal("0.00")));
     }
 }

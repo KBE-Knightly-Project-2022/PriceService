@@ -47,9 +47,9 @@ public class PriceServerTest {
 
     @Test
     public void handleWrongDTO() {
-        String wrongDTOObject = getWrongDTOJson();
+        String wrongDTOJson = getWrongDTOJson();
 
-        priceServer.handlePriceRequest(wrongDTOObject);
+        priceServer.handlePriceRequest(wrongDTOJson);
 
         verifyNoInteractions(priceCalculator);
     }
